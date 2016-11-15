@@ -73,6 +73,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService impleme
 
     private void sendNotification(Map data) {
         int notificationId = 001;
+        String binType=(String)data.get("bin_type");
 // Build intent for notification content
         Intent viewIntent = new Intent(this, MainActivity.class);
         PendingIntent viewPendingIntent =
@@ -80,9 +81,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService impleme
 
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.cast_ic_notification_0)
+                        .setSmallIcon(R.drawable.ic_media_play)
                         .setContentTitle("SegNudge")
-                        .setContentText("Data will be synced to wearable")
+                        .setContentText("Data synced to wearable "+binType)
                         .setContentIntent(viewPendingIntent);
 
 // Get an instance of the NotificationManager service
@@ -92,7 +93,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService impleme
 // Build the notification and issues it with notification manager.
         notificationManager.notify(notificationId, notificationBuilder.build());
 
-        changeBin((String)data.get("bin_type"));
+        changeBin(binType);
     }
 
     private void changeBin(String binType) {
