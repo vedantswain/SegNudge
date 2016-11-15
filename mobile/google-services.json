@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "881267650618",
+    "firebase_url": "https://segnudge.firebaseio.com",
+    "project_id": "segnudge",
+    "storage_bucket": "segnudge.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:881267650618:android:e8dfbe6a385f1789",
+        "android_client_info": {
+          "package_name": "edu.gatech.vedant.segnudge"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "881267650618-3af5c5nlrr4mnar5r5kgpmqiqqgi42cp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7JrAzt9bbmcJtrcw-UHbuaf4ret3Cl8Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
