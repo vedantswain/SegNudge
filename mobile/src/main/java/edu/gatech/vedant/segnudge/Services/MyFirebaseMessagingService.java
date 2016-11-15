@@ -92,7 +92,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService impleme
 // Build the notification and issues it with notification manager.
         notificationManager.notify(notificationId, notificationBuilder.build());
 
-//        changeBin((String)data.get("bin_type"));
+        changeBin((String)data.get("bin_type"));
     }
 
     private void changeBin(String binType) {
