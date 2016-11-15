@@ -25,7 +25,13 @@
         <service
             android:name=".DataService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
+                <data android:scheme="wear" android:host="*"
+                    android:path="/bin-type" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

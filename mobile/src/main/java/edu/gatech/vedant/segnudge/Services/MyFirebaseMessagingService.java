@@ -100,7 +100,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService impleme
         Log.d(TAG,"Changing bin to: "+binType);
 
         PutDataMapRequest putDataMapReq = PutDataMapRequest.create(Common.PATH_BIN_TYPE);
-        putDataMapReq.getDataMap().putString(Common.KEY_BIN_TYPE, binType);
+        putDataMapReq.getDataMap().putString(Common.KEY_BIN_TYPE, binType +" "+ System.currentTimeMillis());
         PutDataRequest putDataReq = putDataMapReq.asPutDataRequest();
         putDataMapReq.setUrgent();
         PendingResult<DataApi.DataItemResult> pendingResult =
