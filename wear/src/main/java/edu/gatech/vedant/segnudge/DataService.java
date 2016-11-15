@@ -1,5 +1,6 @@
 package edu.gatech.vedant.segnudge;
 
+import android.content.Intent;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -45,6 +46,11 @@ public class DataService extends WearableListenerService{
                 if (item.getUri().getPath().compareTo(Common.PATH_BIN_TYPE) == 0) {
                     DataMap dataMap = DataMapItem.fromDataItem(item).getDataMap();
                     Log.d(TAG, dataMap.getString(Common.KEY_BIN_TYPE));
+
+                    Intent mIntent = new Intent(this, WakeActivity.class);
+                    mIntent.putExtra(Common.KEY_BIN_TYPE,dataMap.getString(Common.KEY_BIN_TYPE));
+                    mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(mIntent);
                 }
             } else if (event.getType() == DataEvent.TYPE_DELETED) {
                 // DataItem deleted
