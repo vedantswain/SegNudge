@@ -16,7 +16,7 @@ public class Common {
     public static final int SWIPE_THRESHOLD = 20;
     public static final int SWIPE_VELOCITY_THRESHOLD = 20;
 
-    public Map<String,String> getPbMap(Context ctx){
+    public static Map<String,String> getPbMap(Context ctx){
         Resources res=ctx.getResources();
         Map<String, String> mMap = new HashMap<String, String>();
         mMap.put("pb",res.getString(R.string.pb));
@@ -29,7 +29,7 @@ public class Common {
     }
 
 
-    public Map<String,String> getAcMap(Context ctx){
+    public static Map<String,String> getAcMap(Context ctx){
         Resources res=ctx.getResources();
         Map<String, String> mMap = new HashMap<String, String>();
         mMap.put("ac",res.getString(R.string.ac));
@@ -41,7 +41,7 @@ public class Common {
         return mMap;
     }
 
-    public Map<String,String> getMpMap(Context ctx){
+    public static Map<String,String> getMpMap(Context ctx){
         Resources res=ctx.getResources();
         Map<String, String> mMap = new HashMap<String, String>();
         mMap.put("mp",res.getString(R.string.mp));
@@ -55,7 +55,7 @@ public class Common {
         return mMap;
     }
 
-    public Map<String,String> getLfMap(Context ctx){
+    public static Map<String,String> getLfMap(Context ctx){
         Resources res=ctx.getResources();
         Map<String, String> mMap = new HashMap<String, String>();
         mMap.put("lf",res.getString(R.string.lf));

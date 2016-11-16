@@ -12,6 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import java.util.Map;
+
 public class LauncherActivity extends Activity {
 
     private TextView mTextView;
@@ -21,6 +23,14 @@ public class LauncherActivity extends Activity {
 
     private DismissOverlayView mDismissOverlay;
     private GestureDetector mDetector;
+
+    private Map<String,String> pbMap;
+
+    private final String YES="y";
+    private final String NO="n";
+
+    private String initProbe="pb";
+    private String currProbe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +45,10 @@ public class LauncherActivity extends Activity {
 //        });
 
         startService(new Intent(this, DataService.class));
+
+        //Plastic tree
+        pbMap=Common.getPbMap(this);
+        currProbe=initProbe;
 
         // Configure a gesture detector
         configDetector();
@@ -51,8 +65,8 @@ public class LauncherActivity extends Activity {
     private void configFlipper() {
         mViewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
 
-        mViewFlipper.addView(getNewView("Hello World"));
-        mViewFlipper.addView(getNewView("End World"));
+        mViewFlipper.addView(getNewView(pbMap.get("pb")));
+//        mViewFlipper.addView(getNewView("End World"));
     }
 
     public View getNewView(String question){
@@ -117,18 +131,44 @@ public class LauncherActivity extends Activity {
         return mDetector.onTouchEvent(ev) || super.onTouchEvent(ev);
     }
 
-    public void onSwipeRight() {
-        Log.d(TAG, "Swipe Right");
-        mViewFlipper.setInAnimation(this, R.anim.transition_in_right);
-        mViewFlipper.setOutAnimation(this, R.anim.transition_out_right);
-        mViewFlipper.showPrevious();
-    }
-
     public void onSwipeLeft() {
         Log.d(TAG, "Swipe Left");
+        ifYes(currProbe+YES);
+    }
+
+
+    public void onSwipeRight() {
+        Log.d(TAG, "Swipe Right");
+        ifNo(currProbe+NO);
+    }
+
+    public void ifYes(String probe){
+        currProbe=probe;
+        mViewFlipper.addView(getNewView(pbMap.get(probe)),0);
+        animNext();
+    }
+
+    public void ifNo(String probe){
+        currProbe=probe;
+        mViewFlipper.addView(getNewView(pbMap.get(probe)));
+        animPrev();
+    }
+
+
+    public void animNext(){
         mViewFlipper.setInAnimation(this, R.anim.transition_in_left);
         mViewFlipper.setOutAnimation(this, R.anim.transition_out_left);
+        //inverted scrolling
         mViewFlipper.showNext();
+        mViewFlipper.removeViewAt(1);
+    }
+
+    public void animPrev(){
+        mViewFlipper.setInAnimation(this, R.anim.transition_in_right);
+        mViewFlipper.setOutAnimation(this, R.anim.transition_out_right);
+        //inverted scrolling
+        mViewFlipper.showPrevious();
+        mViewFlipper.removeViewAt(0);
     }
 
 
