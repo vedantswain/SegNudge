@@ -7,6 +7,7 @@ import android.support.wearable.view.DismissOverlayView;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
@@ -50,11 +51,17 @@ public class LauncherActivity extends Activity {
     private void configFlipper() {
         mViewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
 
-        mViewFlipper.addView(getNewTextView("Hello World"));
-        mViewFlipper.addView(getNewTextView("End World"));
+        mViewFlipper.addView(getNewView("Hello World"));
+        mViewFlipper.addView(getNewView("End World"));
     }
 
-    public TextView getNewTextView(String question){
+    public View getNewView(String question){
+        RelativeLayout rl = new RelativeLayout(this);
+        RelativeLayout.LayoutParams rlParams =
+                new RelativeLayout.LayoutParams(new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
+        rl.setLayoutParams(rlParams);
+
         TextView textView = new TextView(this);
         textView.setText(question);
         RelativeLayout.LayoutParams layoutParams =
@@ -63,7 +70,10 @@ public class LauncherActivity extends Activity {
         layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
         textView.setLayoutParams(layoutParams);
-        return textView;
+
+        rl.addView(textView);
+
+        return rl;
     }
 
     public void configDetector(){
