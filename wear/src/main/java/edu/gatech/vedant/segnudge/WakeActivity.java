@@ -63,13 +63,13 @@ public class WakeActivity extends WearableActivity {
     private void updateDisplay() {
         if (isAmbient()) {
             mContainerView.setBackgroundColor(getResources().getColor(android.R.color.black));
-            mTextView.setTextColor(getResources().getColor(android.R.color.white));
+            mTextView.setTextColor(getResources().getColor(android.R.color.secondary_text_dark));
             mClockView.setVisibility(View.VISIBLE);
 
             mClockView.setText(AMBIENT_DATE_FORMAT.format(new Date()));
         } else {
             mContainerView.setBackground(null);
-            mTextView.setTextColor(getResources().getColor(android.R.color.black));
+            mTextView.setTextColor(getResources().getColor(android.R.color.white));
             mClockView.setVisibility(View.GONE);
         }
     }
