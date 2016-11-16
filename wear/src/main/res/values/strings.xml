@@ -6,4 +6,33 @@
     <string name="title_activity_wake">WakeActivity</string>
     <string name="hello_world">Hello World!</string>
     <string name="long_press_intro">Exit App</string>
+
+    <!--Plastic Questions-->
+    <string name="pb">Is it plastic?</string>
+    <string name="pby">Is it a bottle/cup/container?</string>
+    <string name="pbyy">You\'re at the right place</string>
+    <string name="pbyn">Throw it in Landfill</string>
+    <string name="pbn">Try another bin</string>
+
+    <!--Aluminum Questions-->
+    <string name="ac">Is it aluminum?</string>
+    <string name="acy">Is it a can?</string>
+    <string name="acyy">You\'re at the right place</string>
+    <string name="acyn">Throw it in Landfill</string>
+    <string name="acn">Try another bin</string>
+
+    <!--Paper Questions-->
+    <string name="mp">Is it paper/cardboard?</string>
+    <string name="mpy">Has it touched food/liquid?</string>
+    <string name="mpyy">Throw it in Landfill</string>
+    <string name="mpyn">Is it a cup/wrapper</string>
+    <string name="mpyny">Throw it in Landfill</string>
+    <string name="mpynn">You\'re at the right place</string>
+    <string name="mpn">Try another bin</string>
+
+    <!--Landfill Questions-->
+    <string name="lf">Is it plastic/aluminum/paper?</string>
+    <string name="lfy">You\'re at the right place</string>
+    <string name="lfn">Try another bin</string>
+
 </resources>

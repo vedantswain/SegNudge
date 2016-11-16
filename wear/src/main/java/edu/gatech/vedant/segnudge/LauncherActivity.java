@@ -7,15 +7,16 @@ import android.support.wearable.view.DismissOverlayView;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
-public class MainActivity extends Activity {
+public class LauncherActivity extends Activity {
 
     private TextView mTextView;
+    private ViewFlipper mViewFlipper;
     private static final String TAG = "MainActivity";
 
-    private static final int SWIPE_THRESHOLD = 50;
-    private static final int SWIPE_VELOCITY_THRESHOLD = 50;
 
     private DismissOverlayView mDismissOverlay;
     private GestureDetector mDetector;
@@ -23,7 +24,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_launcher);
 //        final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
 //        stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
 //            @Override
@@ -35,6 +36,39 @@ public class MainActivity extends Activity {
         startService(new Intent(this, DataService.class));
 
         // Configure a gesture detector
+        configDetector();
+
+    }
+
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        // Configure the viewflipper
+        configFlipper();
+    }
+
+    private void configFlipper() {
+        mViewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
+        mViewFlipper.setInAnimation(this, android.R.anim.fade_in);
+        mViewFlipper.setOutAnimation(this, android.R.anim.fade_out);
+
+        mViewFlipper.addView(getNewTextView("Hello World"));
+        mViewFlipper.addView(getNewTextView("End World"));
+    }
+
+    public TextView getNewTextView(String question){
+        TextView textView = new TextView(this);
+        textView.setText(question);
+        RelativeLayout.LayoutParams layoutParams =
+                new RelativeLayout.LayoutParams(new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
+        textView.setLayoutParams(layoutParams);
+        return textView;
+    }
+
+    public void configDetector(){
         mDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public void onLongPress(MotionEvent event) {
@@ -49,7 +83,7 @@ public class MainActivity extends Activity {
                     float diffY = e2.getY() - e1.getY();
                     float diffX = e2.getX() - e1.getX();
                     if (Math.abs(diffX) > Math.abs(diffY)) {
-                        if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                        if (Math.abs(diffX) > Common.SWIPE_THRESHOLD && Math.abs(velocityX) > Common.SWIPE_VELOCITY_THRESHOLD) {
                             if (diffX > 0) {
                                 onSwipeRight();
                             } else {
@@ -58,13 +92,7 @@ public class MainActivity extends Activity {
                         }
                         result = true;
                     }
-                    else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
-                        if (diffY > 0) {
-                            onSwipeBottom();
-                        } else {
-                            onSwipeTop();
-                        }
-                    }
+
                     result = true;
 
                 } catch (Exception exception) {
@@ -73,10 +101,8 @@ public class MainActivity extends Activity {
                 return result;
             }
         });
-
     }
 
-    // Capture long presses
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
 //        Log.d(TAG,"Touch event");
@@ -85,17 +111,13 @@ public class MainActivity extends Activity {
 
     public void onSwipeRight() {
         Log.d(TAG, "Swipe Right");
+        mViewFlipper.showPrevious();
     }
 
     public void onSwipeLeft() {
         Log.d(TAG, "Swipe Left");
+        mViewFlipper.showNext();
     }
 
-    public void onSwipeTop() {
-        Log.d(TAG, "Swipe Top");
-    }
 
-    public void onSwipeBottom() {
-        Log.d(TAG, "Swipe Bottom");
-    }
 }
