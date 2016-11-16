@@ -49,8 +49,6 @@ public class LauncherActivity extends Activity {
 
     private void configFlipper() {
         mViewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
-        mViewFlipper.setInAnimation(this, android.R.anim.fade_in);
-        mViewFlipper.setOutAnimation(this, android.R.anim.fade_out);
 
         mViewFlipper.addView(getNewTextView("Hello World"));
         mViewFlipper.addView(getNewTextView("End World"));
@@ -111,11 +109,15 @@ public class LauncherActivity extends Activity {
 
     public void onSwipeRight() {
         Log.d(TAG, "Swipe Right");
+        mViewFlipper.setInAnimation(this, R.anim.transition_in_right);
+        mViewFlipper.setOutAnimation(this, R.anim.transition_out_right);
         mViewFlipper.showPrevious();
     }
 
     public void onSwipeLeft() {
         Log.d(TAG, "Swipe Left");
+        mViewFlipper.setInAnimation(this, R.anim.transition_in_left);
+        mViewFlipper.setOutAnimation(this, R.anim.transition_out_left);
         mViewFlipper.showNext();
     }
 
