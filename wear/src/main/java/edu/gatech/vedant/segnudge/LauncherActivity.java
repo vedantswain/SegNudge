@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.wearable.view.BoxInsetLayout;
-import android.support.wearable.view.DismissOverlayView;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -23,8 +22,6 @@ public class LauncherActivity extends Activity {
     private ViewFlipper mViewFlipper;
     private static final String TAG = "MainActivity";
 
-
-    private DismissOverlayView mDismissOverlay;
     private GestureDetector mDetector;
 
     private Map<String,String> mMap;
@@ -50,9 +47,9 @@ public class LauncherActivity extends Activity {
 //        mMap =Common.getAcMap(this);
 //        initProbe="ac";
 
-        //Paper tree
-        mMap =Common.getMpMap(this);
-        initProbe="mp";
+//        //Paper tree
+//        mMap =Common.getMpMap(this);
+//        initProbe="mp";
 //
 //        //Landfill tree
 //        mMap =Common.getLfMap(this);
@@ -69,7 +66,7 @@ public class LauncherActivity extends Activity {
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
         // Configure the viewflipper
-        configFlipper();
+//        configFlipper();
     }
 
     private void configFlipper() {

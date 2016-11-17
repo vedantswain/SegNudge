@@ -23,51 +23,16 @@
         app:layout_box="all"
         android:background="@color/black_86p">
 
-        <TextView
-            android:id="@+id/text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/hello_world"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            app:layout_box="all"
-            android:textColor="@android:color/secondary_text_dark" />
+        <ViewFlipper
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/viewFlipper"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
 
-        <TextView
-            android:text="No"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/textView"
-            android:textColor="@color/white" />
+        </ViewFlipper>
 
-        <ImageView
-            android:src="@drawable/ic_right_swipe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:layout_toEndOf="@+id/textView"
-            android:layout_alignTop="@+id/textView" />
-
-        <TextView
-            android:text="Yes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="10dp"
-            android:id="@+id/text2View"
-            android:textColor="@color/white" />
-
-        <ImageView
-            android:src="@drawable/ic_left_swipe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/image2View"
-            android:layout_toStartOf="@+id/text2View"
-            android:layout_alignTop="@+id/text2View" />
 
     </RelativeLayout>
 

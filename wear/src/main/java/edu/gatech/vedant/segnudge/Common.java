@@ -14,7 +14,7 @@ public class Common {
     public static final String KEY_BIN_TYPE = "Bin Type";
     public static final String PATH_BIN_TYPE = "/bin-type";
     public static final int SWIPE_THRESHOLD = 20;
-    public static final int SWIPE_VELOCITY_THRESHOLD = 20;
+    public static final int SWIPE_VELOCITY_THRESHOLD = 10;
 
     public static final String[] leafProbes = new String []
             {"pbyy","pbyn","pbn","acyy","acyn","acn","mpyy","mpyny","mpynn","mpn","lfy","lfn"};
