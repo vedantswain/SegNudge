@@ -51,8 +51,8 @@ public class Common {
         mMap.put("mpy",res.getString(R.string.mpy));
         mMap.put("mpyy",res.getString(R.string.mpyy));
         mMap.put("mpyn",res.getString(R.string.mpyn));
-        mMap.put("mpyn",res.getString(R.string.mpyny));
-        mMap.put("mpyn",res.getString(R.string.mpynn));
+        mMap.put("mpyny",res.getString(R.string.mpyny));
+        mMap.put("mpynn",res.getString(R.string.mpynn));
         mMap.put("mpn",res.getString(R.string.mpn));
 
         return mMap;

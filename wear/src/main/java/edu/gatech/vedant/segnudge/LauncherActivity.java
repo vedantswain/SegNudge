@@ -53,7 +53,7 @@ public class LauncherActivity extends Activity {
         //Paper tree
         mMap =Common.getMpMap(this);
         initProbe="mp";
-
+//
 //        //Landfill tree
 //        mMap =Common.getLfMap(this);
 //        initProbe="lf";
