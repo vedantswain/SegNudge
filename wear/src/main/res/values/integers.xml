@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="another">0x1F914</integer>
+    <integer name="landfill">0x1F4A9</integer>
+    <integer name="aluminum">0x1F913</integer>
+    <integer name="plastic">0x1F601</integer>
+    <integer name="paper">0x1F60C</integer>
+</resources>
