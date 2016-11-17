@@ -35,7 +35,7 @@
     </RelativeLayout>
 
     <View
-        android:id="@+id/rectangleViewNo"
+        android:id="@+id/rectangleNo"
         android:layout_width="10dp"
         android:layout_height="match_parent"
         android:background="@drawable/rect_no"

@@ -3,6 +3,7 @@ package edu.gatech.vedant.segnudge;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.wearable.view.BoxInsetLayout;
 import android.support.wearable.view.DismissOverlayView;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -12,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import java.util.Arrays;
 import java.util.Map;
 
 public class LauncherActivity extends Activity {
@@ -24,7 +26,7 @@ public class LauncherActivity extends Activity {
     private DismissOverlayView mDismissOverlay;
     private GestureDetector mDetector;
 
-    private Map<String,String> pbMap;
+    private Map<String,String> mMap;
 
     private final String YES="y";
     private final String NO="n";
@@ -47,7 +49,7 @@ public class LauncherActivity extends Activity {
         startService(new Intent(this, DataService.class));
 
         //Plastic tree
-        pbMap=Common.getPbMap(this);
+        mMap =Common.getPbMap(this);
         currProbe=initProbe;
 
         // Configure a gesture detector
@@ -65,7 +67,7 @@ public class LauncherActivity extends Activity {
     private void configFlipper() {
         mViewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
 
-        mViewFlipper.addView(getNewView(pbMap.get("pb")));
+        mViewFlipper.addView(getNewView(mMap.get("pb")));
 //        mViewFlipper.addView(getNewView("End World"));
     }
 
@@ -133,24 +135,32 @@ public class LauncherActivity extends Activity {
 
     public void onSwipeLeft() {
         Log.d(TAG, "Swipe Left");
-        ifYes(currProbe+YES);
+        if (!isTerminal(currProbe))
+            ifYes(currProbe+YES);
     }
 
 
     public void onSwipeRight() {
         Log.d(TAG, "Swipe Right");
-        ifNo(currProbe+NO);
+        if (!isTerminal(currProbe))
+            ifNo(currProbe+NO);
     }
 
     public void ifYes(String probe){
         currProbe=probe;
-        mViewFlipper.addView(getNewView(pbMap.get(probe)),0);
+        View probeView = getNewView(mMap.get(probe));
+        if (isTerminal(probe))
+            probeView=finalLeaf(probe);
+        mViewFlipper.addView(probeView,0);
         animNext();
     }
 
     public void ifNo(String probe){
         currProbe=probe;
-        mViewFlipper.addView(getNewView(pbMap.get(probe)));
+        View probeView = getNewView(mMap.get(probe));
+        if (isTerminal(probe))
+            probeView=finalLeaf(probe);
+        mViewFlipper.addView(probeView);
         animPrev();
     }
 
@@ -171,5 +181,39 @@ public class LauncherActivity extends Activity {
         mViewFlipper.removeViewAt(0);
     }
 
+    public boolean isTerminal(String probe){
+       return Arrays.asList(Common.leafProbes).contains(probe);
+    }
 
+    public View finalLeaf(String probe){
+        BoxInsetLayout bil = (BoxInsetLayout) findViewById(R.id.watch_view_stub);
+        bil.setBackgroundColor(getResources().getColor(R.color.colorSuccess));
+
+        View rectNo = findViewById(R.id.rectangleNo);
+        View rectYes = findViewById(R.id.rectangleYes);
+
+        rectNo.setVisibility(View.INVISIBLE);
+        rectYes.setVisibility(View.INVISIBLE);
+
+        RelativeLayout rl = new RelativeLayout(this);
+        RelativeLayout.LayoutParams rlParams =
+                new RelativeLayout.LayoutParams(new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
+        rl.setLayoutParams(rlParams);
+
+        TextView textView = new TextView(this);
+        textView.setText(mMap.get(probe));
+        RelativeLayout.LayoutParams layoutParams =
+                new RelativeLayout.LayoutParams(new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
+        textView.setLayoutParams(layoutParams);
+
+        textView.setTextColor(getResources().getColor(R.color.colorTextSuccess));
+
+        rl.addView(textView);
+
+        return rl;
+    }
 }

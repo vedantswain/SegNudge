@@ -16,6 +16,9 @@ public class Common {
     public static final int SWIPE_THRESHOLD = 20;
     public static final int SWIPE_VELOCITY_THRESHOLD = 20;
 
+    public static final String[] leafProbes = new String []
+            {"pbyy","pbyn","pbn","acyy","acyn","acn","mpyy","mpyny","mpynn","mpn","lfy","lfn"};
+
     public static Map<String,String> getPbMap(Context ctx){
         Resources res=ctx.getResources();
         Map<String, String> mMap = new HashMap<String, String>();
@@ -23,7 +26,7 @@ public class Common {
         mMap.put("pby",res.getString(R.string.pby));
         mMap.put("pbyy",res.getString(R.string.pbyy));
         mMap.put("pbyn",res.getString(R.string.pbyn));
-        mMap.put("pbn",res.getString(R.string.pb));
+        mMap.put("pbn",res.getString(R.string.pbn));
 
         return mMap;
     }
@@ -36,7 +39,7 @@ public class Common {
         mMap.put("acy",res.getString(R.string.acy));
         mMap.put("acyy",res.getString(R.string.acyy));
         mMap.put("acyn",res.getString(R.string.acyn));
-        mMap.put("acn",res.getString(R.string.ac));
+        mMap.put("acn",res.getString(R.string.acn));
 
         return mMap;
     }
@@ -59,8 +62,8 @@ public class Common {
         Resources res=ctx.getResources();
         Map<String, String> mMap = new HashMap<String, String>();
         mMap.put("lf",res.getString(R.string.lf));
-        mMap.put("lfy",res.getString(R.string.lfy));
-        mMap.put("lfyy",res.getString(R.string.lfn));
+        mMap.put("lfn",res.getString(R.string.lfy));
+        mMap.put("lfy",res.getString(R.string.lfn));
 
         return mMap;
     }
