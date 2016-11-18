@@ -20,8 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="5dp"
-        app:layout_box="all"
-        android:background="@color/black_86p">
+        app:layout_box="all">
 
         <ViewFlipper
             android:layout_width="match_parent"
@@ -41,6 +40,7 @@
         android:layout_width="10dp"
         android:layout_height="match_parent"
         android:background="@drawable/rect_no"
+        android:visibility="invisible"
         app:layout_box="left"/>
 
     <View
@@ -49,6 +49,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/rect_yes"
         android:layout_gravity="right"
+        android:visibility="invisible"
         app:layout_box="right"/>
 
 </android.support.wearable.view.BoxInsetLayout>

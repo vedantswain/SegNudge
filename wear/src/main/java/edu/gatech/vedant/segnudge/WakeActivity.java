@@ -40,6 +40,7 @@ public class WakeActivity extends WearableActivity {
 
     private BoxInsetLayout mContainerView;
     private TextView mClockView;
+    private int noId, yesId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,16 +158,27 @@ public class WakeActivity extends WearableActivity {
 
     private void updateDisplay() {
         if (isAmbient()) {
-            mContainerView.setBackgroundColor(getResources().getColor(android.R.color.black));
+            mContainerView.setBackground(null);
 
         } else {
-            mContainerView.setBackgroundColor(getResources().getColor(R.color.colorTree));
+            mContainerView.setBackground(getResources().getDrawable(R.drawable.rect_interactive_bg));
 
             View rectNo = findViewById(R.id.rectangleNo);
             View rectYes = findViewById(R.id.rectangleYes);
+            TextView textNo = (TextView) findViewById(noId);
+            TextView textYes = (TextView) findViewById(yesId);
 
-            rectNo.setVisibility(View.VISIBLE);
-            rectYes.setVisibility(View.VISIBLE);
+            try {
+                if(!isTerminal(currProbe)) {
+                    rectNo.setVisibility(View.VISIBLE);
+                    rectYes.setVisibility(View.VISIBLE);
+                    textNo.setVisibility(View.VISIBLE);
+                    textYes.setVisibility(View.VISIBLE);
+                }
+            }
+            catch (NullPointerException e){
+                Log.d(TAG,e.toString());
+            }
         }
     }
 
@@ -283,8 +295,9 @@ public class WakeActivity extends WearableActivity {
         noParams.setMargins(10,0,0,0);
         noView.setLayoutParams(noParams);
         noView.setTextColor(getResources().getColor(R.color.colorTextTree));
+        noView.setVisibility(View.INVISIBLE);
 
-        int noId = View.generateViewId();
+        noId = View.generateViewId();
         noView.setId(noId);
 
         rl.addView(noView);
@@ -299,8 +312,9 @@ public class WakeActivity extends WearableActivity {
         yesParams.setMargins(0,0,10,0);
         yesView.setLayoutParams(yesParams);
         yesView.setTextColor(getResources().getColor(R.color.colorTextTree));
+        yesView.setVisibility(View.INVISIBLE);
 
-        int yesId = View.generateViewId();
+        yesId = View.generateViewId();
         yesView.setId(yesId);
 
         rl.addView(yesView);
@@ -332,7 +346,7 @@ public class WakeActivity extends WearableActivity {
 
 
     public View finalLeaf(String probe){
-        mContainerView.setBackgroundColor(getResources().getColor(R.color.colorSuccess));
+        mContainerView.setBackground(getResources().getDrawable(R.drawable.rect_interactive_bg_success));
 
         View rectNo = findViewById(R.id.rectangleNo);
         View rectYes = findViewById(R.id.rectangleYes);
@@ -356,7 +370,7 @@ public class WakeActivity extends WearableActivity {
         textView.setLayoutParams(layoutParams);
 
         textView.setTextAppearance(this,android.R.style.TextAppearance_DeviceDefault_Medium);
-        textView.setTextColor(getResources().getColor(R.color.colorTextSuccess));
+//        textView.setTextColor(getResources().getColor(R.color.colorTextSuccess));
 
         rl.addView(textView);
 

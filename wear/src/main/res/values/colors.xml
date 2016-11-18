@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorSuccess">#fafafa</color>
+    <color name="colorSuccess">#ffffff</color>
     <color name="colorTextSuccess">#404040</color>
     <color name="colorTextTree">#fafafa</color>
     <color name="colorTree">#37474f</color>

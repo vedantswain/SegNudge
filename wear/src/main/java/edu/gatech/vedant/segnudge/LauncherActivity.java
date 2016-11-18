@@ -39,9 +39,9 @@ public class LauncherActivity extends Activity {
 
         startService(new Intent(this, DataService.class));
 
-//        //Plastic tree
-//        mMap =Common.getPbMap(this);
-//        initProbe="pb";
+        //Plastic tree
+        mMap =Common.getPbMap(this);
+        initProbe="pb";
 //
 //        //Aluminum tree
 //        mMap =Common.getAcMap(this);
@@ -66,7 +66,7 @@ public class LauncherActivity extends Activity {
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
         // Configure the viewflipper
-//        configFlipper();
+        configFlipper();
     }
 
     private void configFlipper() {

@@ -14,39 +14,39 @@
         android:padding="5dp"
         app:layout_box="all">
 
-        <TextView
-            android:id="@+id/text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="@string/hello_round" />
+        <!--<TextView-->
+            <!--android:id="@+id/text"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:text="@string/hello_round" />-->
 
-        <!--<ViewFlipper-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:id="@+id/viewFlipper"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:layout_alignParentLeft="true"-->
-            <!--android:layout_alignParentStart="true">-->
+        <ViewFlipper
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/viewFlipper"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
 
-        <!--</ViewFlipper>-->
+        </ViewFlipper>
 
     </RelativeLayout>
 
-    <!--<View-->
-        <!--android:id="@+id/rectangleNo"-->
-        <!--android:layout_width="10dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:background="@drawable/rect_no"-->
-        <!--app:layout_box="left"/>-->
+    <View
+        android:id="@+id/rectangleNo"
+        android:layout_width="10dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/rect_no"
+        app:layout_box="left"/>
 
-    <!--<View-->
-        <!--android:id="@+id/rectangleYes"-->
-        <!--android:layout_width="10dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:background="@drawable/rect_yes"-->
-        <!--android:layout_gravity="right"-->
-        <!--app:layout_box="right"/>-->
+    <View
+        android:id="@+id/rectangleYes"
+        android:layout_width="10dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/rect_yes"
+        android:layout_gravity="right"
+        app:layout_box="right"/>
 
 </android.support.wearable.view.BoxInsetLayout>
