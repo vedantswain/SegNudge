@@ -11,6 +11,7 @@ import java.util.Map;
  */
 
 public class Common {
+    public static String transcriptionNodeId;
     public static final String KEY_BIN_TYPE = "Bin Type";
     public static final String PATH_BIN_TYPE = "/bin-type";
     public static final int SWIPE_THRESHOLD = 20;
@@ -66,5 +67,9 @@ public class Common {
         mMap.put("lfy",res.getString(R.string.lfn));
 
         return mMap;
+    }
+
+    public static void setTranscriptionId(String id){
+        transcriptionNodeId=id;
     }
 }

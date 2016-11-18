@@ -5,4 +5,5 @@
     <integer name="aluminum">0x1F913</integer>
     <integer name="plastic">0x1F601</integer>
     <integer name="paper">0x1F60C</integer>
+    <integer name="tip">0x1F4A1</integer>
 </resources>

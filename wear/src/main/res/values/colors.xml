@@ -4,4 +4,5 @@
     <color name="colorTextSuccess">#404040</color>
     <color name="colorTextTree">#fafafa</color>
     <color name="colorTree">#37474f</color>
+    <color name="colorAmbient">#212121</color>
 </resources>

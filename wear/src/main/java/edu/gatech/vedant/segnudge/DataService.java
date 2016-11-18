@@ -16,10 +16,19 @@ import com.google.android.gms.wearable.WearableListenerService;
 import java.util.concurrent.TimeUnit;
 
 public class DataService extends WearableListenerService{
+    private static final String
+            LOG_RECORD_CAPABILITY_NAME = "log_record";
+
+    private GoogleApiClient mGoogleApiClient;
+
     public DataService() {
     }
 
     public static final String TAG = "DataService" ;
+
+    public void onCreate(){
+        super.onCreate();
+    }
 
     @Override
     public void onDataChanged(DataEventBuffer dataEvents) {
@@ -57,5 +66,8 @@ public class DataService extends WearableListenerService{
             }
         }
     }
+
+
+
 }
 

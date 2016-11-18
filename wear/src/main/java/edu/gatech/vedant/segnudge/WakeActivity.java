@@ -3,6 +3,7 @@ package edu.gatech.vedant.segnudge;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.annotation.NonNull;
 import android.support.wearable.activity.WearableActivity;
 import android.support.wearable.view.BoxInsetLayout;
 import android.util.Log;
@@ -14,12 +15,24 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import java.text.SimpleDateFormat;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.wearable.MessageApi;
+import com.google.android.gms.wearable.Node;
+import com.google.android.gms.wearable.NodeApi;
+import com.google.android.gms.wearable.Wearable;
+
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.Map;
 
 public class WakeActivity extends WearableActivity {
+
+    private static final String
+            LOG_RECORD_CAPABILITY_NAME = "log_record";
+
+    public static final String LOG_RECORD_MESSAGE_PATH = "/log_record";
+
+    private GoogleApiClient mGoogleApiClient;
 
     private ViewFlipper mViewFlipper;
     private static final String TAG = "WakeActivity";
@@ -35,12 +48,10 @@ public class WakeActivity extends WearableActivity {
     private String currProbe;
 
 
-    private static final SimpleDateFormat AMBIENT_DATE_FORMAT =
-            new SimpleDateFormat("HH:mm", Locale.US);
-
     private BoxInsetLayout mContainerView;
-    private TextView mClockView;
     private int noId, yesId;
+    private Map<String,String> tipMap;
+    private String transcriptionNodeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +73,8 @@ public class WakeActivity extends WearableActivity {
         getInitProbe(dataTxt);
 
         currProbe=initProbe;
+
+        initGoogleApiClient();
 
         configDetector();
     }
@@ -135,6 +148,7 @@ public class WakeActivity extends WearableActivity {
         mViewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
 
         mViewFlipper.addView(getRootView(mMap.get(currProbe)));
+        requestLog("Test log");
 //        mViewFlipper.addView(getNewView("End World"));
     }
 
@@ -158,10 +172,13 @@ public class WakeActivity extends WearableActivity {
 
     private void updateDisplay() {
         if (isAmbient()) {
-            mContainerView.setBackground(null);
+            mContainerView.setBackgroundColor(getResources().getColor(R.color.colorAmbient));
 
         } else {
-            mContainerView.setBackground(getResources().getDrawable(R.drawable.rect_interactive_bg));
+            if(isTerminal(currProbe))
+                mContainerView.setBackground(getResources().getDrawable(R.drawable.rect_interactive_bg_success));
+            else
+                mContainerView.setBackground(getResources().getDrawable(R.drawable.rect_interactive_bg));
 
             View rectNo = findViewById(R.id.rectangleNo);
             View rectYes = findViewById(R.id.rectangleYes);
@@ -384,6 +401,47 @@ public class WakeActivity extends WearableActivity {
         emojiView.setLayoutParams(emojiParams);
 
         emojiView.setTextAppearance(this,android.R.style.TextAppearance_DeviceDefault_Large);
+        emojiView.setTextSize(40);
+
+        rl.addView(emojiView);
+
+        return rl;
+    }
+
+    public View tipLeaf(String tip){
+        mContainerView.setBackground(getResources().getDrawable(R.drawable.rect_interactive_bg_success));
+
+        RelativeLayout rl = new RelativeLayout(this);
+        RelativeLayout.LayoutParams rlParams =
+                new RelativeLayout.LayoutParams(new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
+        rl.setLayoutParams(rlParams);
+
+        TextView textView = new TextView(this);
+        textView.setText(tipMap.get(tip));
+        RelativeLayout.LayoutParams layoutParams =
+                new RelativeLayout.LayoutParams(new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
+        textView.setLayoutParams(layoutParams);
+
+        textView.setTextAppearance(this,android.R.style.TextAppearance_DeviceDefault_Medium);
+//        textView.setTextColor(getResources().getColor(R.color.colorTextSuccess));
+
+        rl.addView(textView);
+
+        TextView emojiView = new TextView(this);
+        emojiView.setText(new String(Character.toChars(getResources().getInteger(R.integer.tip))));
+        RelativeLayout.LayoutParams emojiParams =
+                new RelativeLayout.LayoutParams(new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+        emojiParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        emojiParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        emojiView.setLayoutParams(emojiParams);
+
+        emojiView.setTextAppearance(this,android.R.style.TextAppearance_DeviceDefault_Large);
+        emojiView.setTextSize(40);
 
         rl.addView(emojiView);
 
@@ -407,4 +465,37 @@ public class WakeActivity extends WearableActivity {
             emojiInt=R.integer.landfill;
 
         return new String(Character.toChars(getResources().getInteger(emojiInt)));
-    }}
+    }
+
+    private void initGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder( this )
+                .addApi( Wearable.API )
+                .build();
+
+        mGoogleApiClient.connect();
+    }
+
+
+    private void requestLog(final String logText) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                NodeApi.GetConnectedNodesResult nodes = Wearable.NodeApi.getConnectedNodes( mGoogleApiClient ).await();
+                for(Node node : nodes.getNodes()) {
+                    Wearable.MessageApi.sendMessage(
+                            mGoogleApiClient, node.getId(), LOG_RECORD_MESSAGE_PATH, logText.getBytes()).setResultCallback(new ResultCallback<MessageApi.SendMessageResult>() {
+                        @Override
+                        public void onResult(@NonNull MessageApi.SendMessageResult result) {
+                            if (!result.getStatus().isSuccess()) {
+                                // Failed to send message
+                                Log.d(TAG, "Failed to send log");
+                            }
+                        }
+                    });
+
+                }
+            }
+        }).start();
+    }
+
+}
