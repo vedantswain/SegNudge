@@ -2,6 +2,7 @@ package edu.gatech.vedant.segnudge;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.wearable.activity.WearableActivity;
@@ -31,6 +32,7 @@ public class WakeActivity extends WearableActivity {
             LOG_RECORD_CAPABILITY_NAME = "log_record";
 
     public static final String LOG_RECORD_MESSAGE_PATH = "/log_record";
+    private static final long KILL_TIME = 2000; //milliseconds to kill app after terminal
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -46,7 +48,8 @@ public class WakeActivity extends WearableActivity {
 
     private String initProbe;
     private String currProbe;
-
+    private long startTime;
+    private long stopTime;
 
     private BoxInsetLayout mContainerView;
     private int noId, yesId;
@@ -59,6 +62,7 @@ public class WakeActivity extends WearableActivity {
         setContentView(R.layout.activity_wake);
         setAmbientEnabled();
 
+        startTime=System.currentTimeMillis();
         mContainerView = (BoxInsetLayout) findViewById(R.id.container);
 
         Intent intent = getIntent();
@@ -73,6 +77,10 @@ public class WakeActivity extends WearableActivity {
         getInitProbe(dataTxt);
 
         currProbe=initProbe;
+
+        Log.d(TAG, "Activity started");
+
+        showInteractive();
 
         initGoogleApiClient();
 
@@ -148,7 +156,7 @@ public class WakeActivity extends WearableActivity {
         mViewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
 
         mViewFlipper.addView(getRootView(mMap.get(currProbe)));
-        requestLog("Test log");
+//        requestLog("Test log");
 //        mViewFlipper.addView(getNewView("End World"));
     }
 
@@ -172,30 +180,40 @@ public class WakeActivity extends WearableActivity {
 
     private void updateDisplay() {
         if (isAmbient()) {
+            Log.d(TAG,"Is Ambient");
             mContainerView.setBackgroundColor(getResources().getColor(R.color.colorAmbient));
 
         } else {
-            if(isTerminal(currProbe))
-                mContainerView.setBackground(getResources().getDrawable(R.drawable.rect_interactive_bg_success));
-            else
-                mContainerView.setBackground(getResources().getDrawable(R.drawable.rect_interactive_bg));
+            showInteractive();
+        }
+    }
 
-            View rectNo = findViewById(R.id.rectangleNo);
-            View rectYes = findViewById(R.id.rectangleYes);
-            TextView textNo = (TextView) findViewById(noId);
-            TextView textYes = (TextView) findViewById(yesId);
+    public void showInteractive(){
+        Log.d(TAG,"Is Interactive");
+        if(isTerminal(currProbe)) {
+            Log.d(TAG,"Is Success");
+            mContainerView.setBackground(getResources().getDrawable(R.drawable.rect_interactive_bg_success));
+        }
+        else {
+            Log.d(TAG,"Is Tree");
+            mContainerView.setBackground(getResources().getDrawable(R.drawable.rect_interactive_bg));
+        }
 
-            try {
-                if(!isTerminal(currProbe)) {
-                    rectNo.setVisibility(View.VISIBLE);
-                    rectYes.setVisibility(View.VISIBLE);
-                    textNo.setVisibility(View.VISIBLE);
-                    textYes.setVisibility(View.VISIBLE);
-                }
+        View rectNo = findViewById(R.id.rectangleNo);
+        View rectYes = findViewById(R.id.rectangleYes);
+        TextView textNo = (TextView) findViewById(noId);
+        TextView textYes = (TextView) findViewById(yesId);
+
+        try {
+            if(!isTerminal(currProbe)) {
+                rectNo.setVisibility(View.VISIBLE);
+                rectYes.setVisibility(View.VISIBLE);
+                textNo.setVisibility(View.VISIBLE);
+                textYes.setVisibility(View.VISIBLE);
             }
-            catch (NullPointerException e){
-                Log.d(TAG,e.toString());
-            }
+        }
+        catch (NullPointerException e){
+            Log.d(TAG,e.toString());
         }
     }
 
@@ -405,7 +423,22 @@ public class WakeActivity extends WearableActivity {
 
         rl.addView(emojiView);
 
+        stopTime= System.currentTimeMillis();
+
+        requestLog(startTime+","+initProbe+","+currProbe+","+stopTime);
+        setFinishTimer();
+
         return rl;
+    }
+
+    private void setFinishTimer() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        }, KILL_TIME);
     }
 
     public View tipLeaf(String tip){

@@ -12,6 +12,8 @@ import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.Wearable;
 import com.google.android.gms.wearable.WearableListenerService;
 
+import edu.gatech.vedant.segnudge.Logger;
+
 public class LogService extends WearableListenerService implements MessageApi.MessageListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     public static final String LOG_RECORD_MESSAGE_PATH = "/log_record";
 
@@ -37,7 +39,9 @@ public class LogService extends WearableListenerService implements MessageApi.Me
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
         if (messageEvent.getPath().equals(LOG_RECORD_MESSAGE_PATH)) {
-            Log.d(TAG,new String(messageEvent.getData()));
+            String recMsg=new String(messageEvent.getData());
+            Log.d(TAG,recMsg);
+            Logger.logWrite(recMsg);
         }
     }
 
