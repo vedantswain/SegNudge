@@ -70,7 +70,7 @@ public class Logger {
     }
 
     public static void logWrite(String logstring){
-        logFile=new File(Environment.getExternalStorageDirectory()+File.separator+"SegNudge"+"log"+".csv");
+        logFile=new File(Environment.getExternalStorageDirectory()+File.separator+"SegNudge"+File.separator+"log"+".csv");
         LogWrite(logFile,logstring, HEADER);
     }
 
