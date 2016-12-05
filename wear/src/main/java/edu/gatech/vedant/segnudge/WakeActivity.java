@@ -291,7 +291,7 @@ public class WakeActivity extends WearableActivity {
         layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
         textView.setLayoutParams(layoutParams);
 
-        textView.setTextAppearance(this,android.R.style.TextAppearance_DeviceDefault_Medium);
+        textView.setTextAppearance(this,android.R.style.TextAppearance_DeviceDefault_Large);
         textView.setTextColor(getResources().getColor(R.color.colorTextTree));
 
         rl.addView(textView);
@@ -315,7 +315,7 @@ public class WakeActivity extends WearableActivity {
         layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
         textView.setLayoutParams(layoutParams);
 
-        textView.setTextAppearance(this,android.R.style.TextAppearance_DeviceDefault_Medium);
+        textView.setTextAppearance(this,android.R.style.TextAppearance_DeviceDefault_Large);
         textView.setTextColor(getResources().getColor(R.color.colorTextTree));
 
         rl.addView(textView);
@@ -404,7 +404,7 @@ public class WakeActivity extends WearableActivity {
         layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
         textView.setLayoutParams(layoutParams);
 
-        textView.setTextAppearance(this,android.R.style.TextAppearance_DeviceDefault_Medium);
+        textView.setTextAppearance(this,android.R.style.TextAppearance_DeviceDefault_Large);
 //        textView.setTextColor(getResources().getColor(R.color.colorTextSuccess));
 
         rl.addView(textView);
@@ -459,7 +459,7 @@ public class WakeActivity extends WearableActivity {
         layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
         textView.setLayoutParams(layoutParams);
 
-        textView.setTextAppearance(this,android.R.style.TextAppearance_DeviceDefault_Medium);
+        textView.setTextAppearance(this,android.R.style.TextAppearance_DeviceDefault_Large);
 //        textView.setTextColor(getResources().getColor(R.color.colorTextSuccess));
 
         rl.addView(textView);
