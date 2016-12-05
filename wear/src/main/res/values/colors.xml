@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorSuccess">#ffffff</color>
-    <color name="colorTextSuccess">#404040</color>
-    <color name="colorTextTree">#fafafa</color>
-    <color name="colorTree">#37474f</color>
-    <color name="colorAmbient">#212121</color>
+    <color name="colorSuccess">#ffffff</color> <!--background of last screen-->
+    <color name="colorTextSuccess">#404040</color> <!--text color when it's last screen-->
+    <color name="colorTextTree">#fafafa</color> <!--text color when it's active-->
+    <color name="colorTree">#37474f</color> <!--background when it's active-->
+    <color name="colorAmbient">#212121</color> <!--background when it's ambient-->
 </resources>
